@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Sans-serif';
+}
+html, body {
+  padding: 0;
+  margin: 0;
+}
+div { 
+  color: #fff; 
+  border: 3px dashed blue;
+}
+#wrap { 
+  border: none;
+}
+
+.block {
+  display: block;
+  background: red;
+}
+.inline-block {
+  display: inline-block;
+  background: green;
+}
+.inline {
+  display: inline;
+  background: black;
+}
+.none {
+  display: none;
+  background: blue;
+}
+.hidden {
+  display: block;
+  visibility: hidden;
+  background: yellow;
+}

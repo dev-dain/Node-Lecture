@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Document</title>
+  <style>
+    .first { background: #825020; color: #fff; }
+    #parent::after { 
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .second {
+      background: #ad193d;
+      color: #fff;
+      float: left;
+      width: 30%;
+    }
+    .third {
+      background: #1359da;
+      color: #fff;
+      float: left;
+      width: 50%;
+    }
+    .fourth {
+      background: #1359da;
+      color: #fff;
+      width: 50%;
+    }
+    .fifth {
+      display: inline-block;
+      background: #6720ad;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="first">float를 적용하지 않은 block div</div>
+  <p></p>
+
+  <div id="parent">
+    <div class="second">float를 적용한 block div</div>
+    <div class="third">float를 적용한 block div</div>
+  </div>
+  <p></p>
+
+  <div id="parent">
+    <div class="second">float를 적용한 block div</div>
+    <div class="fourth">float를 적용하지 않은 block div</div>  
+  </div>
+  <p></p>
+
+  <div class="fifth">inline-block div 1</div>
+  <div class="fifth" style="background: #951a0d">inline-block div 2</div>
+</body>
+</html>
