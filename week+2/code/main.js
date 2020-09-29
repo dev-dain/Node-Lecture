@@ -2,11 +2,23 @@ const time = document.querySelector('.time');
 
 function timer() {
   const today = new Date();
-  let h = today.getHours(); //20
-  let m = today.getMinutes(); //18
-  let s = today.getSeconds(); //58
+  let amOrPm = 'AM ';
+  let h = today.getHours();
+  let m = today.getMinutes(); 
+  let s = today.getSeconds();
+  if (h === 0) {
+    h = 12;
+  } else if (h === 12) {
+    amOrPm = 'PM ';
+  } else if (h > 12) {
+    h -= 12;
+    amOrPm = 'PM ';
+  }
+  (h < 10) ? h = '0'.concat(h) : h;
+  (m < 10) ? m = '0'.concat(m) : m;
+  (s < 10) ? s = '0'.concat(s) : s; 
 
-  time.textContent = `${h} : ${m} : ${s}`;
+  time.textContent = `${amOrPm}${h} : ${m} : ${s}`;
 }
 
 const startFunc = () => {
@@ -26,15 +38,14 @@ const startFunc = () => {
   const createBtn = document.querySelector('#create-btn');
   // const buttonBox = document.querySelector('button-box');
   const inputText = document.getElementsByTagName('input')[0];
-  
+  const timerSection = createBtn.parentElement.parentElement;
   
   createBtn.addEventListener('click', () => {
-    const buttonBox = createBtn.parentElement;
     const newPTag = document.createElement('p');
     newPTag.textContent = 
       (inputText.value) ? inputText.value : `Hi! I'm a new <p> tag.`;
-    inputText.value = '과제가 너무 많아';
-    buttonBox.appendChild(newPTag);
+    inputText.value = '';
+    timerSection.appendChild(newPTag);
   });
 
   const pic = document.querySelector('.pic');
