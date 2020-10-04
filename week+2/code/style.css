@@ -1,0 +1,115 @@
+@font-face { font-family: 'MapoGoldenPier'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff'); font-weight: normal; font-style: normal; }
+*{
+    box-sizing:border-box;
+    font-family: 'MapoGoldenPier';
+}
+html,body{
+    margin:0;/*여백 줄이기*/
+    padding:0;
+    text-align:center;
+    max-width:100%;
+}
+body{
+    max-width: 100%;
+}
+#wrap{height:100vh;}/*viewport height=100퍼*/
+h1{
+    height:50px;
+    margin-top:40px;
+    font-size: 1.6rem;
+ 
+}
+header{
+    display:flex;
+    flex-direction:column;
+    width:100%; /*중요*/
+    height:120px;
+    text-align:center;
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#fcd6f2+40,f0f2d7+100,febceb+100 */
+    background: #fcd6f2; /* Old browsers */
+    background: -moz-linear-gradient(left,  #fcd6f2 40%, #f0f2d7 100%, #febceb 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #fcd6f2 40%,#f0f2d7 100%,#febceb 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #fcd6f2 40%,#f0f2d7 100%,#febceb 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcd6f2', endColorstr='#febceb',GradientType=1 ); /* IE6-9 */
+}
+.intro-section{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+}
+.intro{
+    display:none;
+}
+.pic{
+    position:absolute;
+    top:90px;
+    z-index:10;/*절대 가려지지 x*/
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    transition: .3s all;/*댔을때 스케일 커지도록*/
+    border:2px solid #fff;
+    box-shadow: 0 0 0 2px rgb(255, 118, 141);/*border 두개*/
+    object-fit:cover;/*원래 비율대로*/
+}
+.pic:hover{
+    transform: scale(1.1);
+}
+.timer{
+    height:80%;
+    max-height:80%;
+    overflow-y:hidden;
+    display:flex;
+    justify-content:center;/*가운데로*/
+}
+.box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow:auto;
+    margin-top:50px;/*위 여백*/
+    width: 90%;
+    height:400px;
+    box-shadow:rgba(0,0,0,0.35) 0 5px 15px;
+    border-radius:25px;
+}
+.box > * {/*모든 자식*/
+    margin:20px; 
+}
+
+.box > *first-child {/*모든 자식*/
+    margin:50px; 
+}
+.time{
+    font-size:2rem;
+}
+.time::selection{/*마우스드래그셀렉션,가상요소*/
+    background:#fcd6f2;
+    color:rgb(104, 157, 228);
+}
+input[type="text"]{
+    border:none;
+    border-bottom:2px solid #000;
+    padding:10px;
+    min-width:250px;
+    font-size:1rem;
+}
+.button-box{
+    display:flex;
+    justify-content:center;
+    width:100%;
+}
+button{
+    margin:0 20px;
+    padding:15px;
+    background: rgb(255, 118, 141);
+    border: 2px solid #fff;
+    box-shadow:0 0 0 2px rgb(255, 118, 141),0 7px rgba(0,0,0,0.50);
+    border-radius:15px;
+    color:#fff;
+    cursor:pointer;
+}
+button:active{
+    transform: translateY(5px);
+    box-shadow: 0 2px rgba(0,0,0,0.50);/*그림자는 안내려감*/
+}
