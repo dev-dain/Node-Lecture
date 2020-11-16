@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 app.get('*', (req, res, next) => {
   getConnection(conn => {
-    conn.query(`SELECT title, id FROM article`, (err, results) => {
+    conn.query(`SELECT title, id FROM article ORDER BY created_time desc`, (err, results) => {
       if (err)
         next(err);
       req.list = results;
