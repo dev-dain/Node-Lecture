@@ -40,9 +40,11 @@ module.exports = {
   </html>
   `, list: (files) => {
     let list = '<ol>';
+
     files.forEach(file => {
-      const name = path.parse(file).name;
-      list += `<li><a href="/article/${name}">${name}</a></li>`
+      const name = file.title;
+      const id = file.id;
+      list += `<li><a href="/article/${id}">${name}</a></li>`
     });
     list += '</ol>';
     return list;
