@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require('fs');
 const template = require('../lib/template');
 const sanitizeHtml = require('sanitize-html');
+const getConnection = require('../lib/db');
 
 router.get('/create', (req, res) => {
   const login = '';
@@ -85,21 +86,25 @@ router.post('/delete', (req, res) => {
   });
 });
 
-router.get('/:name', (req, res, next) => {
-  fs.readFile(`./data/${req.params.name}.txt`, (err, data) => {
-    if (err)
-      next(err);
-    
-    const login = '';
-    const title = req.params.name;
-    const content = data;
-    const list = template.list(req.list);
-    const create = template.create();
-    const updateDelete = template.updateDelete(title);
-
-    const html = template.html(title, content, list,
-      `${create}${updateDelete}`, login);
-    res.status(200).send(html);
+router.get('/:id', (req, res, next) => {
+  getConnection(conn => {
+    conn.query(`SELECT ID, TITLE, CONTENT FROM ARTICLE WHERE ID=?`, 
+    [req.params.id], (err, results) => {
+      if (err)
+        next(err);
+      
+      console.log(results);
+      const login = '';
+      const title = results[0].TITLE;
+      const content = results[0].CONTENT;
+      const list = template.list(req.list);
+      const create = template.create();
+      const updateDelete = template.updateDelete(results[0].ID);
+  
+      const html = template.html(title, content, list,
+        `${create}${updateDelete}`, login);
+      res.status(200).send(html);      
+    });
   });
 });
 

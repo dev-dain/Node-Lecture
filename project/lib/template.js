@@ -49,11 +49,11 @@ module.exports = {
     list += '</ol>';
     return list;
   }, create: () => '<a class="btn" href="/article/create">글쓰기</a>',
-  updateDelete: (name='') => 
+  updateDelete: (id='') => 
   `
-    <a class="btn" href="/article/update/${name}">수정</a>
+    <a class="btn" href="/article/update/${id}">수정</a>
     <form action="/article/delete" method="post">
-      <input type="hidden" name="title" value="${name}" readonly>
+      <input type="hidden" name="id" value="${id}" readonly>
       <input type="submit" value="삭제">
     </form>
   `
