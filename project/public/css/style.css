@@ -1,0 +1,120 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+* { 
+  font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-break: keep-all;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+#wrap {
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+a {
+  text-decoration: none;
+  transition: color .2s;
+}
+a:hover {
+  color: #3da7d1;
+}
+h1 > a { 
+  color: #fff; 
+  transition: none;
+}
+h1 > a:hover { color: #fff; }
+header {
+  width: 100%;
+  height: 80px;
+  background: #367fb1;
+  color: #ddd;
+  text-align: center;
+  line-height: 80px;
+}
+.container {
+  min-width: 300px;
+  width: 70%;
+  max-width: 500px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.container > * {
+  padding: 10px 20px;
+}
+ol {
+  margin-left: 15px;
+}
+form {
+  display: inline-block;  
+}
+.btn, input[type="submit"] {
+  border: none;
+  display: inline-block;
+  width: 70px;
+  height: 40px;
+  padding: 10px;
+  background: #3da7d1;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all .3s;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.btn:hover, input[type="submit"]:hover {
+  background: #367fb1;
+  color: #fff;
+}
+section {
+  margin: 20px 0;
+  padding: 25px !important;
+  background: rgb(250, 239, 232);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+section > * {
+  padding: 20px 0;
+}
+h2 {
+  padding: 10px 0;
+}
+input[type="text"] {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 250px;
+  width: 45vh;
+  margin: 20px 0;
+  font-weight: bold;
+}
+textarea {
+  border: none;
+  overflow: auto;
+  min-height: 300px;
+  min-width: 250px;
+  width: 45vh;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  resize: none;
+}
+footer {
+  background: #367fb1;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  padding: 10px 0;
+  font-weight: bold;
+}

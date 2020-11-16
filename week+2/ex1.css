@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Sans-serif';
+}
+html, body {
+  padding: 0;
+  margin: 0;
+}
+div { 
+  color: #fff; 
+  border: 3px dashed blue;
+}
+#wrap { 
+  border: none;
+}
+
+.block {
+  /* display: block; */
+  background: red;
+}
+.inline-block {
+  display: inline-block;
+  background: green;
+  height: 100px;
+}
+.inline {
+  display: inline;
+  background: black;
+  height: 100px;  
+  /* display: inline일 때 
+  height, width 등의 공간 정보는 무시됩니다*/
+}
+.none {
+  display: none;
+  background: blue;
+  /* 눈에 보이지 않고, 공간도 차지하지 않음 */
+}
+.hidden {
+  /* display: block; */
+  visibility: hidden;
+  background: yellow;
+  /* 눈에 보이지는 않지만 공간은 차지 */
+}
