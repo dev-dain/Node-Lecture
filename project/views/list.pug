@@ -1,0 +1,5 @@
+mixin get-list(list)
+  ol
+    each item in list
+      li
+        a(href=`/article/${item.id}`)= item.title

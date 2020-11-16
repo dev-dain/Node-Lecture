@@ -1,0 +1,24 @@
+doctype
+html(lang="ko")
+  head
+    meta(charset="utf-8")
+    title= title
+    meta(name="viewport" content="initial-scale=1.0, width=device-width")
+    link(rel="stylesheet" href="/css/style.css")
+  body
+    #wrap
+      header
+        h1
+          a(href="/") Welcome to Node Page!
+      .container
+        .list
+          include list
+          if list
+            +get-list(list)
+        .cud
+          a.btn(href="/article/create") 글쓰기
+        section
+          h2= title
+          block content
+            p!= content
+      footer 2020 Dukboon

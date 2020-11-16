@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const fs = require('fs');
 const helmet = require('helmet');
+const pug = require('pug');
 
 const compression = require('compression');
 const indexRouter = require('./routes/index');
@@ -15,6 +15,8 @@ app.use(helmet());
 app.use(compression());
 app.post('*', express.urlencoded({ extended: false }));
 app.use(express.static('public'));
+app.use(express.static('views'));
+app.set('view engine', 'pug');
 
 app.get('*', (req, res, next) => {
   getConnection(conn => {
