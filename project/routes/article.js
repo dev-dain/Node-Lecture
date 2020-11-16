@@ -32,8 +32,17 @@ router.post('/create', (req, res) => {
   const content = sanitizeHtml(req.body.content, {
     allowedTags: ['em', 'strong', 'h1']
   });
-  fs.writeFile(`./data/${title}.txt`, content, 'utf8', () => {
-    res.redirect(302, `/article/${title}`);
+  // fs.writeFile(`./data/${title}.txt`, content, 'utf8', () => {
+  //   res.redirect(302, `/article/${title}`);
+  // });
+  getConnection(conn => {
+    conn.query(`INSERT INTO article (title, content, created_time, author_id) values (?, ?, now(), 1)`,
+    [title, content], (err, result) => {
+      if (err)
+        next(err);
+      res.redirect(302, `/article/${result.insertId}`);
+    });
+    conn.release();
   });
 });
 
@@ -105,6 +114,7 @@ router.get('/:id', (req, res, next) => {
         `${create}${updateDelete}`, login);
       res.status(200).send(html);      
     });
+    conn.release();
   });
 });
 
