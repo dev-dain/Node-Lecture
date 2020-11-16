@@ -17,6 +17,11 @@ html(lang="ko")
             +get-list(list)
         .cud
           a.btn(href="/article/create") 글쓰기
+          if id
+            a.btn(href=`/article/update/${id}`) 수정
+            form(action="/article/delete" method="post")
+              input(type="hidden" name="id" value=`${id}` readonly)
+              input(type="submit" value="삭제")
         section
           h2= title
           block content

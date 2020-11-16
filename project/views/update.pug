@@ -1,0 +1,10 @@
+extends basic
+
+block content
+  form(action="/article/update" method="post")
+    p
+      input(type="hidden" name="id" value= id)
+      input(type="text" name="title" placeholder="title" value= article_title)
+    p
+      textarea(name="content")= article_content
+    input(type="submit" value="글쓰기")

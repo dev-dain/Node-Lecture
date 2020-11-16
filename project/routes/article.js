@@ -1,30 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const template = require('../lib/template');
 const sanitizeHtml = require('sanitize-html');
 const getConnection = require('../lib/db');
 
 router.get('/create', (req, res) => {
-  const login = '';
   const title = "Create";
-  const content =
-    `
-  <form action="/article/create" method="post">
-  <p>
-    <input type="text" name="title" placeholder="title">
-  </p>
-  <p>
-    <textarea name="content"></textarea>
-  </p> 
-  <input type="submit" value="글쓰기">
-  </form>
-  `;
-  const list = template.list(req.list);
-  const create = template.create();
-  const html = template.html(title, content, list,
-    create, login);
-  res.status(200).send(html);
+
+  res.render('create', { title, list: req.list }, (err, html) => {
+    if (err)
+      next(err);
+    res.status(200).send(html);
+  });
 });
 
 router.post('/create', (req, res) => {
@@ -32,9 +18,7 @@ router.post('/create', (req, res) => {
   const content = sanitizeHtml(req.body.content, {
     allowedTags: ['em', 'strong', 'h1']
   });
-  // fs.writeFile(`./data/${title}.txt`, content, 'utf8', () => {
-  //   res.redirect(302, `/article/${title}`);
-  // });
+
   getConnection(conn => {
     conn.query(`INSERT INTO article (title, content, created_time, author_id) values (?, ?, now(), 1)`,
       [title, content], (err, result) => {
@@ -52,28 +36,19 @@ router.get('/update/:id', (req, res, next) => {
       [req.params.id], (err, result) => {
         if (err)
           next(err);
-        const title = `Update - ${result[0].title}`;
-        const content =
-          `
-    <form action="/article/update" method="post">
-      <p>
-        <input type="hidden" name="id" value="${req.params.id}" readonly>
-        <input type="text" name="title" placeholder="title"
-        value="${result[0].title}">
-      </p>
-      <p>
-        <textarea name="content">${result[0].content}</textarea>
-      </p>
-      <input type="submit" value="수정하기">
-    </form>
-    `;
-        const login = '';
-        const list = template.list(req.list);
-        const create = template.create();
-        const updateDelete = template.updateDelete(req.params.id);
-        const html = template.html(title, content, list,
-          `${create}${updateDelete}`, login);
-        res.status(200).send(html);
+        
+          const title = `Update - ${result[0].title}`;
+          res.render('update', {
+            title,
+            list: req.list,
+            id: req.params.id,
+            article_title: result[0].title,
+            article_content: result[0].content
+          }, (err, html) => {
+            if (err)
+              next(err);
+            res.status(200).send(html);
+          });
       });
     conn.release();
   });
@@ -114,17 +89,19 @@ router.get('/:id', (req, res, next) => {
         if (err)
           next(err);
 
-        console.log(results);
-        const login = '';
         const title = results[0].TITLE;
         const content = results[0].CONTENT;
-        const list = template.list(req.list);
-        const create = template.create();
-        const updateDelete = template.updateDelete(results[0].ID);
 
-        const html = template.html(title, content, list,
-          `${create}${updateDelete}`, login);
-        res.status(200).send(html);
+        res.render('basic', {
+          title,
+          id: req.params.id,
+          content,
+          list: req.list
+        }, (err, html) => {
+          if (err)
+            next(err);
+          res.status(200).send(html);
+        })
       });
     conn.release();
   });

@@ -1,0 +1,9 @@
+extends basic
+
+block content
+  form(action="/article/create" method="post")
+    p
+      input(type="text" name="title" placeholder="title")
+    p
+      textarea(name="content")
+    input(type="submit" value="글쓰기")
