@@ -1,9 +1,11 @@
 extends basic
 
 block content
-  form(action="/article/create" method="post")
+  form(action="/article/create" method="post" enctype="multipart/form-data")
     p
       input(type="text" name="title" placeholder="title")
+      br
+      input(type="file" name="image")
     p
       textarea(name="content")
     input(type="submit" value="글쓰기")

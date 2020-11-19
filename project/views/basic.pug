@@ -12,12 +12,15 @@ html(lang="ko")
           a(href="/") Welcome to Node Page!
       .container
         .list
+          if nickname
+            p Hi #{nickname}
           include list
           if list
             +get-list(list)
         .cud
-          a.btn(href="/article/create") 글쓰기
-          if id
+          if nickname
+            a.btn(href="/article/create") 글쓰기
+          if id && nickname
             a.btn(href=`/article/update/${id}`) 수정
             form(action="/article/delete" method="post")
               input(type="hidden" name="id" value=`${id}` readonly)

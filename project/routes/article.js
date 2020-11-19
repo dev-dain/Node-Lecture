@@ -2,6 +2,27 @@ const express = require('express');
 const router = express.Router();
 const sanitizeHtml = require('sanitize-html');
 const getConnection = require('../lib/db');
+const path = require('path');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    if ((file.originalname).match(/\.(jpg|jpeg|png|gif)$/i))
+      cb(null, path.basename(file.originalname, ext) + '+' + Date.now() + ext);
+    else
+      console.log('This is not allowed');
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: {
+    files: 10,
+    fileSize: 10 * 1024 * 1024
+  }
+});
 
 router.get('/create', (req, res) => {
   const title = "Create";
@@ -13,12 +34,13 @@ router.get('/create', (req, res) => {
   });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', upload.single('image'), (req, res) => {
   const title = sanitizeHtml(req.body.title);
   const content = sanitizeHtml(req.body.content, {
     allowedTags: ['em', 'strong', 'h1']
   });
 
+  console.log(req.file);
   getConnection(conn => {
     conn.query(`INSERT INTO article (title, content, created_time, author_id) values (?, ?, now(), 1)`,
       [title, content], (err, result) => {
@@ -83,6 +105,7 @@ router.post('/delete', (req, res) => {
 });
 
 router.get('/:id', (req, res, next) => {
+  const nickname = req.session.nickname ? req.session.nickname : '';
   getConnection(conn => {
     conn.query(`SELECT ID, TITLE, CONTENT FROM ARTICLE WHERE ID=?`,
       [req.params.id], (err, results) => {
@@ -93,6 +116,7 @@ router.get('/:id', (req, res, next) => {
         const content = results[0].CONTENT;
 
         res.render('basic', {
+          nickname,
           title,
           id: req.params.id,
           content,

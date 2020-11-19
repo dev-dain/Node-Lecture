@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const template = require('../lib/template');
 
 router.get('/', (req, res) => {
-  const login = '';
+  const nickname = req.session.nickname ? req.session.nickname : '';
   const title = "Index Page";
   const content = 
     "<img src='/img/pic.jpg' style='max-width: 300px; height: auto' alt='고양이'>";
 
   res.render('basic', {
+    nickname,
     title,
     content,
     list: req.list
