@@ -25,9 +25,11 @@ const upload = multer({
 });
 
 router.get('/create', (req, res) => {
+  const nickname = req.session.nickname ? req.session.nickname : '';
   const title = "Create";
 
-  res.render('create', { title, list: req.list }, (err, html) => {
+  res.render('create', { title, list: req.list, nickname }, 
+  (err, html) => {
     if (err)
       next(err);
     res.status(200).send(html);
@@ -53,6 +55,7 @@ router.post('/create', upload.single('image'), (req, res) => {
 });
 
 router.get('/update/:id', (req, res, next) => {
+  const nickname = req.session.nickname ? req.session.nickname : '';
   getConnection(conn => {
     conn.query(`SELECT id, title, content FROM article WHERE id=?`,
       [req.params.id], (err, result) => {
@@ -62,6 +65,7 @@ router.get('/update/:id', (req, res, next) => {
           const title = `Update - ${result[0].title}`;
           res.render('update', {
             title,
+            nickname,
             list: req.list,
             id: req.params.id,
             article_title: result[0].title,

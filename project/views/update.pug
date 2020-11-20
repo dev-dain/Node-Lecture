@@ -5,6 +5,8 @@ block content
     p
       input(type="hidden" name="id" value= id)
       input(type="text" name="title" placeholder="title" value= article_title)
+      br
+      input(type="file" name="image")
     p
       textarea(name="content")= article_content
     input(type="submit" value="글쓰기")
