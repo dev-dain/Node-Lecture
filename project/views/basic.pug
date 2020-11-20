@@ -23,7 +23,7 @@ html(lang="ko")
         .cud
           if nickname
             a.btn(href="/article/create") 글쓰기
-          if id && nickname
+          if email === author && id
             a.btn(href=`/article/update/${id}`) 수정
             form(action="/article/delete" method="post")
               input(type="hidden" name="id" value=`${id}` readonly)

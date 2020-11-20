@@ -46,14 +46,20 @@ router.post('/create', upload.single('image'), (req, res) => {
     allowedTags: ['em', 'strong', 'h1']
   });
 
-  console.log(req.file);
+  // console.log(req.file);
   getConnection(conn => {
-    conn.query(`INSERT INTO article (title, content, created_time, author_id) values (?, ?, now(), 1)`,
-      [title, content], (err, result) => {
-        if (err)
-          next(err);
+    conn.query(`SELECT ID FROM user WHERE EMAIL=?`, [req.session.email], (err, results) => {
+      if (err)
+        next(err);
+      conn.query(`INSERT INTO article (TITLE, CONTENT, CREATED_TIME, AUTHOR_ID) VALUES (?, ?, now(), ?)`,
+      [title, content, results[0].ID],
+      (err2, result) => {
+        console.log(result);
+        if (err2)
+          next(err2);
         res.redirect(302, `/article/${result.insertId}`);
       });
+    });
     conn.release();
   });
 });
@@ -61,11 +67,11 @@ router.post('/create', upload.single('image'), (req, res) => {
 router.get('/update/:id', (req, res, next) => {
   const nickname = req.session.nickname ? req.session.nickname : '';
   getConnection(conn => {
-    conn.query(`SELECT id, title, content FROM article WHERE id=?`,
+    conn.query(`SELECT * FROM article INNER JOIN user ON article.AUTHOR_ID=user.ID where article.ID=?`,
       [req.params.id], (err, result) => {
         if (err)
           next(err);
-        if (!req.session.isLogined) {
+        if (!req.session.isLogined || req.session.email !== result[0].email) {
           res.redirect(403, '/');
         } else {
           const title = `Update - ${result[0].title}`;
@@ -117,21 +123,25 @@ router.post('/delete', (req, res) => {
 
 router.get('/:id', (req, res, next) => {
   const nickname = req.session.nickname ? req.session.nickname : '';
+  const email = req.session.email ? req.session.email : '';
   getConnection(conn => {
-    conn.query(`SELECT ID, TITLE, CONTENT FROM ARTICLE WHERE ID=?`,
+    
+    conn.query(`SELECT article.ID, user.ID, TITLE, CONTENT, EMAIL, NAME FROM ARTICLE INNER JOIN user ON article.AUTHOR_ID=user.ID where article.ID=?`,
       [req.params.id], (err, results) => {
         if (err)
           next(err);
 
         const title = results[0].TITLE;
         const content = results[0].CONTENT;
-
+        const name = results[0].NAME;
         res.render('basic', {
           nickname,
           title,
           id: req.params.id,
           content,
-          list: req.list
+          list: req.list,
+          email,
+          author: results[0].EMAIL
         }, (err, html) => {
           if (err)
             next(err);
