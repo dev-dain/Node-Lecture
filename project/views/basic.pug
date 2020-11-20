@@ -32,4 +32,6 @@ html(lang="ko")
           h2= title
           block content
             p!= content
+          if name
+            p by #{name}
       footer 2020 Dukboon

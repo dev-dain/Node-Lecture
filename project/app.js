@@ -20,6 +20,7 @@ app.use(compression());
 app.post('*', express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 app.use(express.static('views'));
+app.use(express.static('uploads'));
 app.set('view engine', 'pug');
 
 app.use(cookieParser());
