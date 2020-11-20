@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const getConnection = require('../lib/db');
 const sanitizeHtml = require('sanitize-html');
-const sanitize = require('sanitize-html');
+const bcrypt = require('bcrypt');
+const salt = require('../lib/salt');
 
 router.get('/login', (req, res) => {
   if (req.session.isLogined) {
@@ -20,23 +21,26 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res) => {
   getConnection(conn => {
-    conn.query(`select * from user where email=? and pw=?`,
-    [sanitizeHtml(req.body.email), sanitizeHtml(req.body.pw)],
-    (err, result) => {
-      if (err || result[0] === undefined) {
-        console.log(`result : ${result[0]}`)
-        if (err)
-          next(err);
+    conn.query(`select * from user where email=?`,
+    [sanitizeHtml(req.body.email)], (err, result) => {
+      if (err) {
+        next(err);
         res.redirect(302, '/auth/login');
+
       } else {
-        req.session.save(err2 => {
-          if (err2)
-            next(err2);
-          req.session.nickname = result[0].name;
-          req.session.email = result[0].email;
-          req.session.isLogined = true;
-          res.redirect(302, '/');
-        });
+        if (bcrypt.compareSync(sanitizeHtml(req.body.pw), result[0].pw)) {
+          req.session.save(err2 => {
+            if (err2)
+              next(err2);
+            req.session.nickname = result[0].name;
+            req.session.email = result[0].email;
+            req.session.isLogined = true;
+            res.redirect(302, '/');
+          });
+        } else {
+          console.log('패스워드 불일치');
+          res.redirect(302, '/auth/login');
+        }
       }
     });
     conn.release();
@@ -70,26 +74,32 @@ router.get('/join', (req, res) => {
 });
 
 router.post('/join', (req, res) => {
-  getConnection(conn => {
-    conn.query(`insert into user (email, pw, name, profile) values (?, ?, ?, ?)`,
-    [sanitizeHtml(req.body.email), sanitizeHtml(req.body.pw), sanitizeHtml(req.body.nickname),
-    sanitizeHtml(req.body.profile)], (err, result) => {
-      if (err)
-        next(err);
-      conn.query(`select * from user where id=?`, [result.insertId], (err2, user) => {
-        if (err2)
-          next(err2);
-        req.session.nickname = user[0].name;
-        req.session.email = user[0].email;
-        req.session.isLogined = true;
-        req.session.save(err3 => {
-          if (err3)
-            next(err3);
-          res.redirect(302, '/');
+  let password = '';
+  bcrypt.hash(sanitizeHtml(req.body.pw), salt, (err3, hash) => {
+    if (err3)
+      next(err3);
+    password = hash;
+    getConnection(conn => {
+      conn.query(`insert into user (email, pw, name, profile) values (?, ?, ?, ?)`,
+      [sanitizeHtml(req.body.email), password, sanitizeHtml(req.body.nickname),
+      sanitizeHtml(req.body.profile)], (err, result) => {
+        if (err)
+          next(err);
+        conn.query(`select * from user where id=?`, [result.insertId], (err2, user) => {
+          if (err2)
+            next(err2);
+          req.session.nickname = user[0].name;
+          req.session.email = user[0].email;
+          req.session.isLogined = true;
+          req.session.save(err3 => {
+            if (err3)
+              next(err3);
+            res.redirect(302, '/');
+          });
         });
       });
+      conn.release();
     });
-    conn.release();
   });
 });
 
@@ -119,17 +129,22 @@ router.get('/update', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
-  getConnection(conn => {
-    conn.query(`update user set name=?, pw=?, profile=? where email=?`,
-    [sanitizeHtml(req.body.nickname), sanitizeHtml(req.body.pw),
-    sanitizeHtml(req.body.profile), req.body.email],
-    (err, result) => {
-      if (err)
-        next(err);
-      res.status(200).send('수정이 완료되었습니다. <a href="/">홈으로 가기</a>');
-    });
-    conn.release();
-  })
+  bcrypt.hash(sanitizeHtml(req.body.pw), salt, (err3, hash) => {
+    if (err3)
+      next(err3);
+    password = hash;
+    getConnection(conn => {
+      conn.query(`update user set name=?, pw=?, profile=? where email=?`,
+      [sanitizeHtml(req.body.nickname), password,
+      sanitizeHtml(req.body.profile), req.body.email],
+      (err, result) => {
+        if (err)
+          next(err);
+        res.status(200).send('수정이 완료되었습니다. <a href="/">홈으로 가기</a>');
+      });
+      conn.release();
+    });    
+  });
 });
 
 router.get('/deactivate', (req, res) => {

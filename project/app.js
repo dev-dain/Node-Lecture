@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const pug = require('pug');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const fileStore = require('session-file-store')(session);
+const lokiStore = require('connect-loki')(session);
 
 const compression = require('compression');
 const indexRouter = require('./routes/index');
@@ -33,7 +33,7 @@ app.use(session({
     httpOnly: true,
     maxAge: 1000*60*60*24
   },
-  store: new fileStore()
+  store: new lokiStore()
 }));
 
 app.get('*', (req, res, next) => {

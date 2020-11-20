@@ -1,6 +1,8 @@
 sessions
 uploads
 db-config.json
+salt.js
+session-store.db
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
