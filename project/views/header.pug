@@ -1,10 +1,11 @@
 mixin get-header(nickname)
   if (nickname)
-    p #{nickname} |
-      a.header-btn(href="/auth/logout") 로그아웃 |
-      a.header-btn(href="/auth/deactivate") 회원탈퇴 |
+    .login-box Hi, #{nickname}!
+      br
+      a.header-btn(href="/auth/logout") 로그아웃 | 
+      a.header-btn(href="/auth/deactivate") 회원탈퇴 | 
       a.header-btn(href="/auth/update") 회원 정보 수정
   else
-    p
-      a.header-btn(href="/auth/login") 로그인 |
+    .login-box
+      a.header-btn(href="/auth/login") 로그인 | 
       a.header-btn(href="/auth/join") 회원 가입

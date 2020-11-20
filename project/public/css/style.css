@@ -50,6 +50,21 @@ header {
 }
 .container > * {
   padding: 10px 20px;
+  margin: 15px 0;
+}
+.login-box {
+  align-self: center;
+  padding: 15px 25px;
+  border-radius: 25px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+.login-box > a:visited {
+  color: rgb(192, 104, 233);
+}
+.login-box > a:hover {
+  color: #fff;
 }
 ol {
   margin-left: 15px;
@@ -60,7 +75,7 @@ form {
 .btn, input[type="submit"] {
   border: none;
   display: inline-block;
-  width: 70px;
+  width: 75px;
   height: 40px;
   padding: 10px;
   margin: 0 4px;
@@ -91,7 +106,7 @@ section > * {
 h2 {
   padding: 10px 0;
 }
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"] {
   border: none;
   border-radius: 10px;
   padding: 10px;
@@ -99,6 +114,9 @@ input[type="text"] {
   width: 45vh;
   margin: 20px 0;
   font-weight: bold;
+}
+input[type="email"], input[type="password"] {
+  margin: 10px 0;
 }
 textarea {
   border: none;
