@@ -1,0 +1,10 @@
+extends basic
+
+block content
+  form(action="/auth/deactivate" method="post")
+    h3 정말 탈퇴하시겠습니까?
+    p.
+      회원을 탈퇴하더라도 글이 자동으로 삭제되지 않습니다. 
+      #[br]
+      탈퇴 이후 언제든 다시 새로운 이메일로 돌아오실 수 있습니다. 
+    input(type="submit" value="탈퇴")

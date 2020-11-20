@@ -1,0 +1,9 @@
+extends basic
+
+block content
+  form(action="/auth/login" method="post")
+    p
+      input(type="email" name="email" placeholder="email" required)
+    p
+      input(type="password" name="pw" placeholder="password" required)
+    input(type="submit" value="로그인")

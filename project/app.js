@@ -9,6 +9,7 @@ const fileStore = require('session-file-store')(session);
 const compression = require('compression');
 const indexRouter = require('./routes/index');
 const articleRouter = require('./routes/article');
+const authRouter = require('./routes/auth');
 
 const getConnection = require('./lib/db');
 
@@ -35,8 +36,6 @@ app.use(session({
 }));
 
 app.get('*', (req, res, next) => {
-  if (!req.session.nickname)
-    req.session.nickname = 'dain';
   getConnection(conn => {
     conn.query(`SELECT title, id FROM article ORDER BY created_time desc`, (err, results) => {
       if (err)
@@ -50,6 +49,7 @@ app.get('*', (req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/article', articleRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   res.status(404).send('Sorry! Wrong path.');

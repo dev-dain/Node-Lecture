@@ -1,0 +1,22 @@
+extends basic
+
+block content
+  form(action="/auth/update" method="post")
+    p
+      h3 필수 입력 정보
+      p
+        label(for="email") 이메일
+        input(type="email" id="email" name="email" placeholder="email" value=`${email}` required readonly)
+      p
+        label(for="nickname") 닉네임
+        input(type="text" id="nickname" name="nickname" placeholder="닉네임" value=`${nickname}` required)
+      p
+        label(for="pw") 비밀번호
+        input(type="password" id="pw" name="pw" placeholder="password" required)
+    p
+      h3 선택 입력 정보
+      p
+        label(for="profile") 프로필
+      p
+        textarea(id="profile" name="profile")= profile
+    input(type="submit" value="정보 수정")

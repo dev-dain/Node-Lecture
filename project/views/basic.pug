@@ -11,9 +11,12 @@ html(lang="ko")
         h1
           a(href="/") Welcome to Node Page!
       .container
+        include header
+        if nickname
+          +get-header(nickname)
+        unless nickname
+          +get-header()
         .list
-          if nickname
-            p Hi #{nickname}
           include list
           if list
             +get-list(list)
