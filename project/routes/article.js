@@ -25,15 +25,19 @@ const upload = multer({
 });
 
 router.get('/create', (req, res) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
-  const title = "Create";
-
-  res.render('create', { title, list: req.list, nickname }, 
-  (err, html) => {
-    if (err)
-      next(err);
-    res.status(200).send(html);
-  });
+  if (!req.session.isLogined) {
+    res.redirect(403, '/auth/join');
+  } else {
+    const nickname = req.session.nickname ? req.session.nickname : '';
+    const title = "Create";
+  
+    res.render('create', { title, list: req.list, nickname }, 
+    (err, html) => {
+      if (err)
+        next(err);
+      res.status(200).send(html);
+    });
+  }
 });
 
 router.post('/create', upload.single('image'), (req, res) => {
@@ -61,7 +65,9 @@ router.get('/update/:id', (req, res, next) => {
       [req.params.id], (err, result) => {
         if (err)
           next(err);
-        
+        if (!req.session.isLogined) {
+          res.redirect(403, '/');
+        } else {
           const title = `Update - ${result[0].title}`;
           res.render('update', {
             title,
@@ -75,6 +81,7 @@ router.get('/update/:id', (req, res, next) => {
               next(err);
             res.status(200).send(html);
           });
+        }
       });
     conn.release();
   });

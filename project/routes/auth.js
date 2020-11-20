@@ -5,13 +5,17 @@ const sanitizeHtml = require('sanitize-html');
 const sanitize = require('sanitize-html');
 
 router.get('/login', (req, res) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
-  const title = 'Login';
-  res.render('login', { nickname, title }, (err, html) => {
-    if (err)
-      next(err);
-    res.status(200).send(html);
-  });
+  if (req.session.isLogined) {
+    res.redirect(302, '/');
+  } else {
+    const nickname = req.session.nickname ? req.session.nickname : '';
+    const title = 'Login';
+    res.render('login', { nickname, title }, (err, html) => {
+      if (err)
+        next(err);
+      res.status(200).send(html);
+    });  
+  }
 });
 
 router.post('/login', (req, res) => {
@@ -20,13 +24,19 @@ router.post('/login', (req, res) => {
     [sanitizeHtml(req.body.email), sanitizeHtml(req.body.pw)],
     (err, result) => {
       if (err || result[0] === undefined) {
-        console.error(err.stack);
+        console.log(`result : ${result[0]}`)
+        if (err)
+          next(err);
         res.redirect(302, '/auth/login');
       } else {
-        req.session.nickname = result[0].name;
-        req.session.email = result[0].email;
-        req.session.isLogined = true;
-        res.redirect(302, '/');
+        req.session.save(err2 => {
+          if (err2)
+            next(err2);
+          req.session.nickname = result[0].name;
+          req.session.email = result[0].email;
+          req.session.isLogined = true;
+          res.redirect(302, '/');
+        });
       }
     });
     conn.release();
@@ -34,21 +44,29 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err)
-      next(err);
+  if (!req.session.isLogined) {
     res.redirect(302, '/');
-  });
+  } else {
+    req.session.destroy(err => {
+      if (err)
+        next(err);
+      res.redirect(302, '/');
+    });
+  }
 });
 
 router.get('/join', (req, res) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
-  const title = '회원 가입 폼';
-  res.render('join', { nickname, title }, (err, html) => {
-    if (err)
-      next(err);
-    res.status(200).send(html);
-  });
+  if (req.session.isLogined) {
+    res.redirect(302, '/');
+  } else {
+    const nickname = req.session.nickname ? req.session.nickname : '';
+    const title = '회원 가입 폼';
+    res.render('join', { nickname, title }, (err, html) => {
+      if (err)
+        next(err);
+      res.status(200).send(html);
+    });
+  }
 });
 
 router.post('/join', (req, res) => {
@@ -76,24 +94,28 @@ router.post('/join', (req, res) => {
 });
 
 router.get('/update', (req, res) => {
-  getConnection(conn => {
-    conn.query(`select * from user where email=?`, [req.session.email],
-    (err, result) => {
-      if (err)
-        next(err);
-      const title = '회원 정보 수정';
-      res.render('update-user', {
-        email: result[0].email,
-        nickname: req.session.nickname,
-        profile: result[0].profile,
-        title
-      }, (err, html) => {
+  if (!req.session.isLogined) {
+    res.redirect(403, '/');
+  } else {
+    getConnection(conn => {
+      conn.query(`select * from user where email=?`, [req.session.email],
+      (err, result) => {
         if (err)
           next(err);
-        res.status(200).send(html);
+        const title = '회원 정보 수정';
+        res.render('update-user', {
+          email: result[0].email,
+          nickname: req.session.nickname,
+          profile: result[0].profile,
+          title
+        }, (err, html) => {
+          if (err)
+            next(err);
+          res.status(200).send(html);
+        });
       });
     });
-  });
+  }
 });
 
 router.post('/update', (req, res) => {
@@ -111,14 +133,18 @@ router.post('/update', (req, res) => {
 });
 
 router.get('/deactivate', (req, res) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
-  const title = '회원 탈퇴';
-  res.render('deactivate', { nickname, title },
-  (err, html) => {
-    if (err)
-      next(err);
-    res.status(200).send(html);
-  });
+  if (!req.session.isLogined) {
+    res.redirect(403, '/');
+  } else {
+    const nickname = req.session.nickname ? req.session.nickname : '';
+    const title = '회원 탈퇴';
+    res.render('deactivate', { nickname, title },
+    (err, html) => {
+      if (err)
+        next(err);
+      res.status(200).send(html);
+    });  
+  }
 });
 
 router.post('/deactivate', (req, res) => {
