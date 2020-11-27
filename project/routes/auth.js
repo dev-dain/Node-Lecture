@@ -31,33 +31,12 @@ router.get('/login', (req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
-  getConnection(conn => {
-    conn.query(`select * from user where email=?`,
-    [sanitizeHtml(req.body.email)], (err, result) => {
-      if (err) {
-        next(err);
-        res.redirect(302, '/auth/login');
-
-      } else {
-        if (bcrypt.compareSync(sanitizeHtml(req.body.pw), result[0].pw)) {
-          req.session.save(err2 => {
-            if (err2)
-              next(err2);
-            // req.session.nickname = result[0].name;
-            // req.session.email = result[0].email;
-            // req.session.isLogined = true;
-            res.redirect(302, '/');
-          });
-        } else {
-          console.log('패스워드 불일치');
-          res.redirect(302, '/auth/login');
-        }
-      }
-    });
-    conn.release();
-  });
-});
+router.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/auth/login'
+  })
+);
 
 router.get('/logout', (req, res) => {
   if (!req.user) {
