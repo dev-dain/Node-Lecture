@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
+  const nickname = req.user ? req.user.name : '';
   const title = "Index Page";
   const content = 
     "<img src='/img/pic.jpg' style='max-width: 300px; height: auto' alt='고양이'>";

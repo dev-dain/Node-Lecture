@@ -26,10 +26,10 @@ const upload = multer({
 });
 
 router.get('/create', (req, res) => {
-  if (!req.session.isLogined) {
+  if (!req.user) {
     res.redirect(403, '/auth/join');
   } else {
-    const nickname = req.session.nickname ? req.session.nickname : '';
+    const nickname = req.user ? req.user.name : '';
     const title = "Create";
   
     res.render('create', { title, list: req.list, nickname }, 
@@ -50,7 +50,7 @@ router.post('/create', upload.single('image'), (req, res) => {
   const fileName = req.file ? req.file.filename : '';
 
   getConnection(conn => {
-    conn.query(`SELECT ID FROM user WHERE EMAIL=?`, [req.session.email], (err, results) => {
+    conn.query(`SELECT ID FROM user WHERE EMAIL=?`, [req.user.email], (err, results) => {
       if (err)
         next(err);
       conn.query(`INSERT INTO article (TITLE, CONTENT, CREATED_TIME, AUTHOR_ID, IMAGE) VALUES (?, ?, now(), ?, ?)`,
@@ -67,13 +67,13 @@ router.post('/create', upload.single('image'), (req, res) => {
 });
 
 router.get('/update/:id', (req, res, next) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
+  const nickname = req.user ? req.user.name : '';
   getConnection(conn => {
     conn.query(`SELECT * FROM article INNER JOIN user ON article.AUTHOR_ID=user.ID where article.ID=?`,
       [req.params.id], (err, result) => {
         if (err)
           next(err);
-        if (!req.session.isLogined || req.session.email !== result[0].email) {
+        if (!req.user || req.user.email !== result[0].email) {
           res.redirect(403, '/');
         } else {
           const title = `Update - ${result[0].title}`;
@@ -123,7 +123,10 @@ router.post('/delete', (req, res) => {
     conn.query(`SELECT IMAGE FROM article WHERE id=?`, [id], (err, results) => {
       if (err)
         next(err);
-      fs.unlink(`/uploads/${IMAGE}`, () => { });
+      if (results[0].IMAGE) {
+        fs.unlink(`/uploads/${IMAGE}`, () => { });
+      }
+      
       conn.query(`DELETE FROM article WHERE id=?`, [id], (err, result) => {
         res.redirect(302, '/');
       });
@@ -133,8 +136,8 @@ router.post('/delete', (req, res) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  const nickname = req.session.nickname ? req.session.nickname : '';
-  const email = req.session.email ? req.session.email : '';
+  const nickname = req.user ? req.user.name : '';
+  const email = req.user.email ? req.user.email : '';
   getConnection(conn => {
     
     conn.query(`SELECT article.ID, user.ID, TITLE, CONTENT, EMAIL, NAME, IMAGE FROM ARTICLE INNER JOIN user ON article.AUTHOR_ID=user.ID where article.ID=?`,
