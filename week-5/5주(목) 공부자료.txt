@@ -1,0 +1,10 @@
+﻿19. 외래키 이해하기 - https://brunch.co.kr/@dan-kim/26
+CHAR와 VARCHAR 비교 및 특징 - https://goodgid.github.io/JS-char-vs-varchar/
+SQL Tutorial - https://www.w3schools.com/sql/default.asp
+
+Node.js에서 Mysql Connection Pool 이용하기 - https://techbless.github.io/2020/01/17/Node-js%EC%97%90%EC%84%9C-Mysql-Connection-Pool-%EC%9D%B4%EC%9A%A9%ED%95%98%EA%B8%B0/
+[DB]Connection Pool - https://brownbears.tistory.com/289
+HTTP 쿠키 - https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies
+[WEB] 쿠키, 세션이란? - https://chrisjune-13837.medium.com/web-%EC%BF%A0%ED%82%A4-%EC%84%B8%EC%85%98%EC%9D%B4%EB%9E%80-aa6bcb327582
+[HTTP] 쿠키( Cookie )와 세션( Session ) - https://victorydntmd.tistory.com/34
+Node.js 와 Cookie/Session으로 사용자 정보 저장 - Part1 - https://medium.com/wasd/node-js-%EC%99%80-cookie-session%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98-%EC%A0%95%EB%B3%B4-%EC%A0%80%EC%9E%A5-part-1-b66d8b35a6e6

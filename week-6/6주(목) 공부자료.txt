@@ -1,0 +1,6 @@
+HTTP 쿠키 - https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies
+[WEB] 쿠키, 세션이란? - https://chrisjune-13837.medium.com/web-%EC%BF%A0%ED%82%A4-%EC%84%B8%EC%85%98%EC%9D%B4%EB%9E%80-aa6bcb327582
+[HTTP] 쿠키( Cookie )와 세션( Session ) - https://victorydntmd.tistory.com/34
+Node.js 와 Cookie/Session으로 사용자 정보 저장 - Part1 - https://medium.com/wasd/node-js-%EC%99%80-cookie-session%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98-%EC%A0%95%EB%B3%B4-%EC%A0%80%EC%9E%A5-part-1-b66d8b35a6e6
+HTTP Multipart와 MIME - https://qssdev.tistory.com/47
+multer를 사용해 이미지 업로드하기 - https://www.zerocho.com/category/NodeJS/post/5950a6c4f7934c001894ea83

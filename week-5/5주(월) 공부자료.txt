@@ -1,0 +1,7 @@
+node.js와 DB 사용 - https://eunajjing.github.io/2019/01/09/2019-01-09-node.js%EC%99%80-DB-%EC%82%AC%EC%9A%A9/
+SQL Tutorial - https://www.w3schools.com/sql/default.asp
+템플릿 엔진 Pug(Jade) 사용법 - https://iseongho.github.io/posts/node-template-engine-pug/
+Pug 문법 정리 요약 (템플릿 엔진) - https://jeong-pro.tistory.com/65
+Pug 공식문서 - https://pugjs.org/api/getting-started.html
+
+nodejs와 mysql 연동 에러 - https://www.inflearn.com/questions/3637

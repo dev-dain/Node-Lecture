@@ -1,0 +1,16 @@
+﻿﻿- CSS 셀렉터 : https://poiemaweb.com/css3-selector
+- CSS 박스 모델 : https://poiemaweb.com/css3-box-model
+- CSS Display : https://poiemaweb.com/css3-display
+- 2. 미디어 쿼리와 viewport : https://dev-dain.tistory.com/18
+- Flexbox Layout : https://poiemaweb.com/css3-flexbox
+- CSS Flexbox : https://www.w3schools.com/css/css3_flexbox.asp
+
+- 자바스크립트의 기본 문법 : https://poiemaweb.com/js-syntax-basics
+- let, const와 블록 레벨 스코프 : https://poiemaweb.com/es6-block-scope
+- 템플릿 리터럴 : https://poiemaweb.com/es6-template-literals
+- 화살표 함수 : https://poiemaweb.com/es6-arrow-function
+- 자바스크립트 비동기 처리와 콜백 함수 : https://joshua1988.github.io/web-development/javascript/javascript-asynchronous-operation/
+
+- DOM 트리 : https://ko.javascript.info/dom-nodes
+- getElement*, querySelector*로 요소 검색하기 : https://ko.javascript.info/searching-elements-dom
+- 브라우저 이벤트 소개 : https://ko.javascript.info/introduction-browser-events

@@ -1,0 +1,6 @@
+공식 문서 : https://expressjs.com/ko/
+공식 문서 - 라우팅 : https://expressjs.com/ko/guide/routing.html
+익스프레스 미들웨어, 라우팅 : https://www.zerocho.com/category/NodeJS/post/578b5a36d8316615006bee0f
+express.js API 문서 - app, router, req/res : https://dev-dain.tistory.com/66
+[Node.js] express 미들웨어란? : https://dev-dain.tistory.com/67
+공식 문서 - 미들웨어 사용 : https://expressjs.com/ko/guide/using-middleware.html

@@ -1,0 +1,6 @@
+WEB2 - OAuth 2.0 : https://opentutorials.org/course/3405
+[OAuth 2.0] OAuth란? : https://velog.io/@undefcat/OAuth-2.0-%EA%B0%84%EB%8B%A8%EC%A0%95%EB%A6%AC
+Passport 공식 문서 : http://www.passportjs.org/
+[passport] Node.js로 카카오 로그인 구현해보기 #3 카카오 로그인 구현하기 : http://blog.naver.com/PostView.nhn?blogId=donggyu_00&logNo=221386317833&from=search&redirect=Log&widgetTypeCall=true&directAccess=false
+Passport.js 로컬 인증 방식 사용법과 동작 흐름 : https://dev-dain.tistory.com/73
+패스포트 동작 원리와 인증 구현 : https://jeonghwan-kim.github.io/dev/2020/06/20/passport.html
